@@ -1,0 +1,32 @@
+const KEYWORD_BOOST = 0.20;
+
+const mergeSearchResults = (keywordResults, semanticResults) => {
+    const map = new Map();
+
+    // Add semantic results
+    for (const note of semanticResults) {
+        map.set(note._id.toString(), {
+            ...note,
+            finalScore: note.score
+        });
+    }
+
+    // Merge keyword results
+    for (const note of keywordResults) {
+        const id = note._id.toString();
+
+        if (map.has(id)) {
+            map.get(id).finalScore += KEYWORD_BOOST;
+        } else {
+            map.set(id, {
+                ...note,
+                score: null,
+                finalScore: KEYWORD_BOOST
+            });
+        }
+    }
+
+    return [...map.values()].sort((a, b) => b.finalScore - a.finalScore);
+};
+
+module.exports = mergeSearchResults;

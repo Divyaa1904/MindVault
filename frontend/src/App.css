@@ -1,0 +1,14 @@
+/* App-level overrides — kept minimal since index.css handles the design system */
+
+.ProseMirror {
+  outline: none;
+  min-height: 400px;
+}
+
+.ProseMirror:focus {
+  outline: none;
+}
+
+.ProseMirror p {
+  margin: 0.5rem 0;
+}
